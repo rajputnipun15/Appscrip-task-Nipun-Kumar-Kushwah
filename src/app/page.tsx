@@ -12,40 +12,89 @@ export const metadata: Metadata = {
     "Explore mettā muse's curated collection of handcrafted artisan products, premium clothing, and bespoke luxury accessories.",
 };
 
-async function getProducts(): Promise<{ products: Product[]; error: string | null }> {
+const PRIMARY_API_URL = "https://fakestoreapi.com/products";
+const FALLBACK_API_URL =
+  "https://cdn.jsdelivr.net/gh/paoloricciuti/sveltekit-view-transition@014ec4aa337189fef59d222f16954f63dcc2328a/examples/list-and-details/src/lib/products.json";
+const SECONDARY_FALLBACK_URL =
+  "https://raw.githubusercontent.com/paoloricciuti/sveltekit-view-transition/014ec4aa337189fef59d222f16954f63dcc2328a/examples/list-and-details/src/lib/products.json";
+
+interface RawProduct {
+  id?: number;
+  title?: string;
+  price?: number;
+  description?: string;
+  category?: string;
+  image?: string;
+  rating?: {
+    rate?: number;
+    count?: number;
+  };
+}
+
+async function fetchProductsFromUrl(url: string): Promise<Product[] | null> {
   try {
-    const res = await fetch("https://fakestoreapi.com/products", {
-      // Revalidate every hour, or fetch fresh
+    const res = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "Mozilla/5.0 (compatible; AppscripCatalog/1.0)",
+      },
       next: { revalidate: 3600 },
     });
 
     if (!res.ok) {
-      return {
-        products: [],
-        error: `Unable to load products at this moment (Status: ${res.status}). Please try refreshing the page.`,
-      };
+      if (process.env.NODE_ENV !== "production") {
+        console.warn(`Product fetch from ${url} returned status: ${res.status}`);
+      }
+      return null;
     }
 
-    const data: Product[] = await res.json();
+    const data: RawProduct[] = await res.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      return null;
+    }
 
-    // Sanitize products to ensure reliable data
-    const sanitized = data.map((item) => ({
-      id: item.id,
+    return data.map((item, idx) => ({
+      id: typeof item.id === "number" ? item.id : idx + 1,
       title: item.title || "Untitled Product",
       price: typeof item.price === "number" ? item.price : 0,
       description: item.description || "No description available.",
       category: item.category || "General",
       image: item.image || "",
-      rating: item.rating || { rate: 0, count: 0 },
+      rating: {
+        rate: typeof item.rating?.rate === "number" ? item.rating.rate : 0,
+        count: typeof item.rating?.count === "number" ? item.rating.count : 0,
+      },
     }));
-
-    return { products: sanitized, error: null };
-  } catch {
-    return {
-      products: [],
-      error: "We could not connect to our product catalog. Please check your internet connection or try again later.",
-    };
+  } catch (err) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(`Error connecting to ${url}:`, err);
+    }
+    return null;
   }
+}
+
+async function getProducts(): Promise<{ products: Product[]; error: string | null }> {
+  // 1. Primary: FakeStoreAPI
+  let products = await fetchProductsFromUrl(PRIMARY_API_URL);
+
+  // 2. Fallback: Legitimate API/CDN mirror of authentic catalog data (for environments where primary returns 403)
+  if (!products || products.length === 0) {
+    products = await fetchProductsFromUrl(FALLBACK_API_URL);
+  }
+
+  // 3. Secondary Fallback: Direct raw mirror if primary and first fallback are unreachable
+  if (!products || products.length === 0) {
+    products = await fetchProductsFromUrl(SECONDARY_FALLBACK_URL);
+  }
+
+  if (products && products.length > 0) {
+    return { products, error: null };
+  }
+
+  return {
+    products: [],
+    error: "Unable to load products at this moment. Please try refreshing the page.",
+  };
 }
 
 export default async function HomePage() {
