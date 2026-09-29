@@ -2,7 +2,7 @@
 
 A responsive product catalog built with Next.js, React, TypeScript, and plain CSS, based on a modern editorial-style shopping interface.
 
-[Live Demo](YOUR_NETLIFY_URL) · [GitHub](YOUR_GITHUB_URL)
+[Live Demo](YOUR_NETLIFY_URL) · [GitHub](https://github.com/rajputnipun15/Appscrip-task-Nipun-Kumar-Kushwah)
 
 ---
 
@@ -173,7 +173,7 @@ Make sure you have the following installed:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/Appscrip-task-Nipun-Kumar-Kushwah.git
+git clone https://github.com/rajputnipun15/Appscrip-task-Nipun-Kumar-Kushwah.git
 ```
 
 2. Enter the project directory:
@@ -215,7 +215,7 @@ The application is configured for deployment using Netlify and connected to the 
 Every production deployment can be built directly from the repository using the project's Next.js configuration and `netlify.toml`.
 
 - **Live Demo**: [YOUR_NETLIFY_URL](YOUR_NETLIFY_URL)
-- **Repository**: [YOUR_GITHUB_URL](YOUR_GITHUB_URL)
+- **Repository**: [GitHub](https://github.com/rajputnipun15/Appscrip-task-Nipun-Kumar-Kushwah)
 
 ---
 
