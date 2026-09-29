@@ -12,6 +12,8 @@ export const metadata: Metadata = {
     "Explore mettā muse's curated collection of handcrafted artisan products, premium clothing, and bespoke luxury accessories.",
 };
 
+export const dynamic = "force-dynamic";
+
 const PRIMARY_API_URL = "https://fakestoreapi.com/products";
 const FALLBACK_API_URL =
   "https://cdn.jsdelivr.net/gh/paoloricciuti/sveltekit-view-transition@014ec4aa337189fef59d222f16954f63dcc2328a/examples/list-and-details/src/lib/products.json";
@@ -38,7 +40,7 @@ async function fetchProductsFromUrl(url: string): Promise<Product[] | null> {
         Accept: "application/json",
         "User-Agent": "Mozilla/5.0 (compatible; AppscripCatalog/1.0)",
       },
-      next: { revalidate: 3600 },
+      cache: "no-store",
     });
 
     if (!res.ok) {
