@@ -106,6 +106,7 @@ export default function QuickViewModal({
                 height={500}
                 priority
                 src={product.image}
+                unoptimized
                 width={400}
               />
             </div>

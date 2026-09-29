@@ -48,6 +48,7 @@ export default function ProductCard({
             loading="lazy"
             onError={() => setImgError(true)}
             src={product.image}
+            unoptimized
             width={320}
           />
         ) : (
