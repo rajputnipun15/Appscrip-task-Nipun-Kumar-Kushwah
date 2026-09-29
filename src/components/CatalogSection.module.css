@@ -1,0 +1,115 @@
+.catalogSection {
+  width: 100%;
+}
+
+.mainContainer {
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: 24px 16px;
+  display: flex;
+  align-items: flex-start;
+}
+
+@media (min-width: 640px) {
+  .mainContainer {
+    padding: 32px;
+  }
+}
+
+.gridContainer {
+  flex: 1;
+  min-width: 0;
+  transition: all 0.3s ease;
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 14px;
+  row-gap: 28px;
+}
+
+@media (min-width: 640px) {
+  .productGrid {
+    column-gap: 20px;
+    row-gap: 40px;
+  }
+}
+
+@media (min-width: 768px) {
+  .productGrid {
+    column-gap: 24px;
+  }
+}
+
+/* Dynamic columns when filter is open vs closed */
+@media (min-width: 768px) {
+  .gridFilterOpen {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gridFilterClosed {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .gridFilterOpen {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .gridFilterClosed {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* Empty State */
+.emptyState {
+  padding: 80px 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyIcon {
+  width: 48px;
+  height: 48px;
+  color: #d4d4d4;
+  margin-bottom: 16px;
+  stroke-width: 1.2;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-black);
+  margin-bottom: 4px;
+}
+
+.emptyText {
+  font-size: 12px;
+  color: #737373;
+  max-width: 384px;
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+.resetBtn {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 10px 24px;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.resetBtn:hover {
+  background-color: #262626;
+}

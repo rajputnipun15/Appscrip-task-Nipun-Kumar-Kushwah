@@ -1,0 +1,247 @@
+/* Mobile backdrop */
+.mobileBackdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(23, 23, 23, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 40;
+  transition: opacity 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .mobileBackdrop {
+    display: none;
+  }
+}
+
+.backdropOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.backdropClosed {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Sidebar panel */
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  background-color: var(--color-white);
+  width: 288px;
+  height: 100%;
+  overflow-y: auto;
+  transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+  transform: translateX(-100%);
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    position: static;
+    z-index: 10;
+    width: 210px;
+    height: auto;
+    overflow-y: visible;
+    flex-shrink: 0;
+    border-right: 1px solid var(--color-border);
+    padding-right: 24px;
+    margin-right: 0;
+    transform: none;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, padding 0.35s ease, border-width 0.35s ease;
+  }
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    width: 280px;
+    padding-right: 32px;
+  }
+}
+
+.sidebarOpen {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+/* When collapsed on desktop */
+@media (min-width: 768px) {
+  .sidebarCollapsed {
+    width: 0 !important;
+    opacity: 0 !important;
+    padding-right: 0 !important;
+    border-right-width: 0 !important;
+    margin-right: 0 !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+  }
+}
+
+.sidebarInner {
+  padding: 20px;
+}
+
+@media (min-width: 768px) {
+  .sidebarInner {
+    padding: 4px 0 0 0;
+  }
+}
+
+/* Mobile drawer header */
+.mobileDrawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .mobileDrawerHeader {
+    display: none;
+  }
+}
+
+.mobileTitle {
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.mobileCloseBtn {
+  padding: 6px;
+  color: #737373;
+  cursor: pointer;
+}
+
+.mobileCloseBtn:hover {
+  color: var(--color-black);
+}
+
+/* Row checkbox */
+.rowCheckbox {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxInput {
+  width: 16px;
+  height: 16px;
+  border-radius: 0;
+  border: 1px solid #a3a3a3;
+  accent-color: var(--color-black);
+  cursor: pointer;
+}
+
+.checkboxText {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-black);
+}
+
+/* Accordions */
+.accordionGroup {
+  border-bottom: 1px solid var(--color-border);
+  padding: 16px 0;
+}
+
+.accordionBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+}
+
+.accordionTitle {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-black);
+  transition: color 0.2s;
+}
+
+.accordionBtn:hover .accordionTitle {
+  color: #525252;
+}
+
+.accordionSub {
+  display: block;
+  font-size: 11px;
+  color: #737373;
+  margin-top: 2px;
+  text-transform: capitalize;
+}
+
+.accordionChevron {
+  width: 14px;
+  height: 14px;
+  color: #737373;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.accordionChevronOpen {
+  transform: rotate(180deg);
+}
+
+.accordionChevronClosed {
+  transform: rotate(0deg);
+}
+
+.accordionBody {
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.unselectAllBtn {
+  font-size: 11px;
+  color: #737373;
+  text-decoration: underline;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.unselectAllBtn:hover {
+  color: var(--color-black);
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #404040;
+  cursor: pointer;
+  transition: color 0.2s;
+  text-transform: capitalize;
+}
+
+.optionLabel:hover {
+  color: var(--color-black);
+}
