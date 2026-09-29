@@ -76,7 +76,6 @@ This repository fulfills the Appscrip Frontend Technical Assignment requirements
 ## Architecture & Project Structure
 
 ```
-├── public/                 # Static assets and icons
 ├── src/
 │   ├── app/
 │   │   ├── globals.css     # Design tokens, variables, resets & keyframes
