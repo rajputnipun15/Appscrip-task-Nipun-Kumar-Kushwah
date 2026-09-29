@@ -33,6 +33,20 @@ interface RawProduct {
   };
 }
 
+function normalizeProductImageUrl(url?: string): string {
+  if (!url) return "";
+  if (url.includes("fakestoreapi.com/img/")) {
+    if (url.endsWith("_t.png") || url.endsWith("-2t.png")) {
+      return url;
+    }
+    return url
+      .replace(/_\.jpg$/, "_t.png")
+      .replace(/-2\.jpg$/, "-2t.png")
+      .replace(/\.jpg$/, "_t.png");
+  }
+  return url;
+}
+
 async function fetchProductsFromUrl(url: string): Promise<Product[] | null> {
   try {
     const res = await fetch(url, {
@@ -61,7 +75,7 @@ async function fetchProductsFromUrl(url: string): Promise<Product[] | null> {
       price: typeof item.price === "number" ? item.price : 0,
       description: item.description || "No description available.",
       category: item.category || "General",
-      image: item.image || "",
+      image: normalizeProductImageUrl(item.image),
       rating: {
         rate: typeof item.rating?.rate === "number" ? item.rating.rate : 0,
         count: typeof item.rating?.count === "number" ? item.rating.count : 0,
