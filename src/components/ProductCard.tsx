@@ -80,9 +80,9 @@ export default function ProductCard({
       <div className={styles.cardDetails}>
         <div className={styles.cardHeaderRow}>
           <div className={styles.titleContainer}>
-            <h3 className={styles.title}>
+            <h2 className={styles.title}>
               {product.title}
-            </h3>
+            </h2>
             <p
               className={styles.pricingNotice}
               onClick={(e) => e.stopPropagation()}
