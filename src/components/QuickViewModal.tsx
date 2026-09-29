@@ -11,6 +11,8 @@ interface QuickViewModalProps {
   onClose: () => void;
   isWishlisted: boolean;
   onToggleWishlist: (productId: number) => void;
+  isSignedIn?: boolean;
+  onSignIn?: () => void;
 }
 
 export default function QuickViewModal({
@@ -19,6 +21,8 @@ export default function QuickViewModal({
   onClose,
   isWishlisted,
   onToggleWishlist,
+  isSignedIn = false,
+  onSignIn,
 }: QuickViewModalProps) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(true);
   const [inquireStatus, setInquireStatus] = useState<"idle" | "loading" | "done">("idle");
@@ -137,19 +141,30 @@ export default function QuickViewModal({
               {/* Real Price Display & Notice */}
               <div className={styles.pricingNoticeBox}>
                 <div>
-                  <div className={styles.realPrice}>
-                    ${product.price.toFixed(2)}
-                  </div>
-                  <div className={styles.pricingNoticeText}>
-                    <span className={styles.pricingNoticeLink}>
-                      Sign in
-                    </span>{" "}
-                    or{" "}
-                    <span className={styles.pricingNoticeLink}>
-                      Create an account
-                    </span>{" "}
-                    to view exclusive pricing.
-                  </div>
+                  {isSignedIn ? (
+                    <div className={styles.realPrice}>
+                      ${product.price.toFixed(2)}
+                    </div>
+                  ) : (
+                    <div className={styles.pricingNoticeText}>
+                      <button
+                        className={styles.pricingNoticeLink}
+                        onClick={onSignIn}
+                        type="button"
+                      >
+                        Sign in
+                      </button>{" "}
+                      or{" "}
+                      <button
+                        className={styles.pricingNoticeLink}
+                        onClick={onSignIn}
+                        type="button"
+                      >
+                        Create an account
+                      </button>{" "}
+                      to view exclusive pricing.
+                    </div>
+                  )}
                 </div>
                 <span className={styles.pingDot} />
               </div>

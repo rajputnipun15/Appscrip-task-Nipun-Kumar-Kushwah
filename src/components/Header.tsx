@@ -7,9 +7,16 @@ import styles from "./Header.module.css";
 interface HeaderProps {
   onSearch?: (query: string) => void;
   wishlistCount?: number;
+  isSignedIn?: boolean;
+  onToggleSignIn?: () => void;
 }
 
-export default function Header({ onSearch, wishlistCount = 0 }: HeaderProps) {
+export default function Header({
+  onSearch,
+  wishlistCount = 0,
+  isSignedIn = false,
+  onToggleSignIn,
+}: HeaderProps) {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isDesktopSearchOpen, setIsDesktopSearchOpen] = useState(false);
   const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
@@ -231,8 +238,14 @@ export default function Header({ onSearch, wishlistCount = 0 }: HeaderProps) {
             </button>
 
             {/* User Account */}
-            <button aria-label="User Account" className={`${styles.actionIconBtn} ${styles.userAccountBtn}`} type="button">
-              <svg className={styles.actionIconSvg} fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+            <button
+              aria-label={isSignedIn ? "Sign Out" : "Sign In"}
+              className={`${styles.actionIconBtn} ${styles.userAccountBtn}`}
+              onClick={onToggleSignIn}
+              title={isSignedIn ? "Signed In (Click to Sign Out)" : "Click to Sign In"}
+              type="button"
+            >
+              <svg className={styles.actionIconSvg} fill={isSignedIn ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
                 <path
                   d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                   strokeLinecap="round"
@@ -411,12 +424,19 @@ export default function Header({ onSearch, wishlistCount = 0 }: HeaderProps) {
 
           {/* Secondary Utilities */}
           <div className={styles.drawerUtilities}>
-            <a className={styles.drawerUtilityLink} href="#account" onClick={() => setIsMobileNavOpen(false)}>
-              <svg style={{ width: "16px", height: "16px" }} fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+            <button
+              className={styles.drawerUtilityLink}
+              onClick={() => {
+                onToggleSignIn?.();
+                setIsMobileNavOpen(false);
+              }}
+              type="button"
+            >
+              <svg style={{ width: "16px", height: "16px" }} fill={isSignedIn ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
                 <path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              <span>Account / Sign In</span>
-            </a>
+              <span>{isSignedIn ? "Sign Out" : "Account / Sign In"}</span>
+            </button>
             <a className={styles.drawerUtilityLink} href="#wishlist" onClick={() => setIsMobileNavOpen(false)}>
               <svg style={{ width: "16px", height: "16px" }} fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
                 <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" strokeLinecap="round" strokeLinejoin="round" />

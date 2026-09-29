@@ -10,6 +10,8 @@ interface ProductCardProps {
   isWishlisted: boolean;
   onToggleWishlist: (productId: number) => void;
   onOpenQuickView: (product: Product) => void;
+  isSignedIn?: boolean;
+  onSignIn?: () => void;
 }
 
 export default function ProductCard({
@@ -17,6 +19,8 @@ export default function ProductCard({
   isWishlisted,
   onToggleWishlist,
   onOpenQuickView,
+  isSignedIn = false,
+  onSignIn,
 }: ProductCardProps) {
   const [imgError, setImgError] = useState(false);
   const [bouncing, setBouncing] = useState(false);
@@ -83,18 +87,41 @@ export default function ProductCard({
             <h2 className={styles.title}>
               {product.title}
             </h2>
-            <p
-              className={styles.pricingNotice}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <span className={styles.price}>
-                ${product.price.toFixed(2)}
-              </span>
-              <span className={styles.signInLink}>
-                Sign in
-              </span>{" "}
-              or Create an account to see pricing
-            </p>
+            {isSignedIn ? (
+              <p className={styles.pricingNotice}>
+                <span className={styles.price}>
+                  ${product.price.toFixed(2)}
+                </span>
+              </p>
+            ) : (
+              <p
+                className={styles.pricingNotice}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  className={styles.signInLink}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSignIn?.();
+                  }}
+                  type="button"
+                >
+                  Sign in
+                </button>{" "}
+                or{" "}
+                <button
+                  className={styles.signInLink}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSignIn?.();
+                  }}
+                  type="button"
+                >
+                  Create an account
+                </button>{" "}
+                to see pricing
+              </p>
+            )}
           </div>
 
           {/* Wishlist Button */}

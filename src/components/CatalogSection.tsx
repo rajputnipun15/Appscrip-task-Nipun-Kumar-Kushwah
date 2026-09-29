@@ -13,6 +13,8 @@ interface CatalogSectionProps {
   categories: string[];
   searchQuery?: string;
   onWishlistCountChange?: (count: number) => void;
+  isSignedIn?: boolean;
+  onSignIn?: () => void;
 }
 
 export default function CatalogSection({
@@ -20,6 +22,8 @@ export default function CatalogSection({
   categories,
   searchQuery = "",
   onWishlistCountChange,
+  isSignedIn = false,
+  onSignIn,
 }: CatalogSectionProps) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -136,9 +140,11 @@ export default function CatalogSection({
             >
               {displayedProducts.map((product) => (
                 <ProductCard
+                  isSignedIn={isSignedIn}
                   isWishlisted={wishlist.has(product.id)}
                   key={product.id}
                   onOpenQuickView={handleOpenQuickView}
+                  onSignIn={onSignIn}
                   onToggleWishlist={handleToggleWishlist}
                   product={product}
                 />
@@ -179,8 +185,10 @@ export default function CatalogSection({
       {/* Quick View Modal */}
       <QuickViewModal
         isOpen={isQuickViewOpen}
+        isSignedIn={isSignedIn}
         isWishlisted={quickViewProduct ? wishlist.has(quickViewProduct.id) : false}
         onClose={handleCloseQuickView}
+        onSignIn={onSignIn}
         onToggleWishlist={handleToggleWishlist}
         product={quickViewProduct}
       />

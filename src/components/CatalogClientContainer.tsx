@@ -18,15 +18,23 @@ export default function CatalogClientContainer({
 }: CatalogClientContainerProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [wishlistCount, setWishlistCount] = useState(0);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   return (
     <>
-      <Header onSearch={setSearchQuery} wishlistCount={wishlistCount} />
+      <Header
+        isSignedIn={isSignedIn}
+        onSearch={setSearchQuery}
+        onToggleSignIn={() => setIsSignedIn((prev) => !prev)}
+        wishlistCount={wishlistCount}
+      />
       <main className={styles.mainContent} id="main-content">
         <HeroSection />
         <CatalogSection
           categories={categories}
           initialProducts={initialProducts}
+          isSignedIn={isSignedIn}
+          onSignIn={() => setIsSignedIn(true)}
           onWishlistCountChange={setWishlistCount}
           searchQuery={searchQuery}
         />
